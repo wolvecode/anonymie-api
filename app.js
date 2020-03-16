@@ -28,7 +28,7 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended: true}))
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
@@ -36,10 +36,10 @@ app.set('views', path.join(__dirname, 'views'))
 app.get('/', (req, res) => {
   res.render('adminReg')
 })
+
 app.use('/suggestion', suggestion)
 app.use('/comment', comment)
 app.use('/admin', admin)
 app.use('/auth', auth)
-
 
 module.exports = app
