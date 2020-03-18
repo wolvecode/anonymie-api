@@ -1,3 +1,8 @@
+/*
+Admin controller will be re-contructed, admin will only be availabke on authorise..
+No access to admin without been authorised
+ */
+
 const _ = require('lodash')
 const bcrypt = require('bcrypt')
 const { Admin, validate } = require('../model/admin')

@@ -3,7 +3,6 @@ const { Comment, validate } = require('../model/comment')
 exports.getAllComment = async (req, res) => {
   const comment = await Comment.find()
   res.send(comment)
-  next()
 }
 
 exports.createComment = async (req, res) => {
