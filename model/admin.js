@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const Joi = require('joi')
-const jwt = require('jsonwebtoken')
-const config = require('config')
 const Schema = mongoose.Schema
 
 const adminSchema = new mongoose.Schema({
@@ -22,23 +20,19 @@ const adminSchema = new mongoose.Schema({
 })
 
 adminSchema.pre('save', async function(next) {
-  const user = this
+  const admin = this
   const hash = await bcrypt.hash(this.password, 10)
   this.password = hash
   next()
 })
 
 adminSchema.methods.isValidPassword = async function(password) {
-  const user = this
-  const compare = await bcrypt.compare(password, user.password)
+  const admin = this
+  const compare = await bcrypt.compare(password, admin.password)
   return compare
 }
 
 const Admin = mongoose.model('Admin', adminSchema)
-// adminSchema.methods.generateAuthToken = function() {
-//   const token = jwt.sign({_id: this._id}, config.get('jwtPrivateKey'))
-//   return token
-// }
 
 function validateAdmin(admin) {
   const schema = {
