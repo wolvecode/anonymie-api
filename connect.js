@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+//connection to the mongo database
 mongoose
   .connect('mongodb://localhost/anoymie', {
     useNewUrlParser: true,
