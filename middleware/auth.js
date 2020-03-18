@@ -1,6 +1,7 @@
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
-const { Admin, validate } = require('../model/admin')
+const { Admin } = require('../model/admin')
+//
 const JWTstrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
 
@@ -14,6 +15,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
+        //save the information provided by the admin
         const admin = await Admin.create({ email, password })
         return done(null, admin)
       } catch (error) {
@@ -40,9 +42,9 @@ passport.use(
         //if admin, then validate password
         const validate = await admin.isValidPassword(password)
         if (!validate) {
-          return done(null, false, { message: 'Wrong password, try again' })
+          return done(null, false, { message: 'Invalid password provided' })
         }
-        //if password correspond with email, then sedn
+        //if password correspond with email, then send
         return done(null, admin, { message: 'login successful' })
       } catch (error) {
         return done(error)
@@ -51,6 +53,7 @@ passport.use(
   )
 )
 
+//verifies that the token sent by admin is valid, to access a secure route
 passport.use(
   new JWTstrategy(
     {
@@ -59,26 +62,10 @@ passport.use(
     },
     async (token, done) => {
       try {
-        return done(null, token.user)
+        return done(null, token.admin)
       } catch (error) {
         done(error)
       }
     }
   )
 )
-
-// const jwt = require('jsonwebtoken')
-// const config = require('config')
-
-// module.exports = function(req, res, next) {
-//   const token = req.header('x-auth-token')
-//   if (!token) return res.status(401).send('Access denied. No token provided')
-
-//   try {
-//     const decoded = jwt.verify(token, config.get('jswPrivateKey'))
-//     req.admin = decoded
-//     next()
-//   } catch (ex) {
-//     res.status(400).send('Invalid token')
-//   }
-// }
