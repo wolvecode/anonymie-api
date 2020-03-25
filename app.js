@@ -7,6 +7,8 @@ const comment = require('./router/comment')
 const admin = require('./router/admin')
 const login = require('./router/login')
 const secureRoute = require('./router/secure-route')
+const getSugComment = require('./router/getSugComment')
+
 const connect = require('./connect')
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -22,7 +24,10 @@ app.use(
   passport.authenticate('jwt', { session: false }),
   suggestion
 )
-
+app.use(
+  '/getSugComt',
+  passport.authenticate('jwt', { session: false }, getSugComment)
+)
 //Handles Error
 app.use(function(err, req, res, next) {
   res.status(err.status || 500)
@@ -32,4 +37,7 @@ app.use(function(err, req, res, next) {
 app.use('/comment', comment)
 app.use('/admin', admin)
 
-module.exports = app
+const port = process.env.PORT || 5000
+app.listen(port, () => {
+  console.log(`Listening on port: ${port}`)
+})
