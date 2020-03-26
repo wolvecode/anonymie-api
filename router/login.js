@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const router = express.Router()
 
-//handle signup middleware from middleware-auth 
+//handle signup middleware from middleware-auth
 router.post(
   '/signup',
   passport.authenticate('signup', { session: false }),

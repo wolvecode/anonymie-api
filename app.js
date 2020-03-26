@@ -11,7 +11,7 @@ const getSugComment = require('./router/getSugComment')
 
 const connect = require('./connect')
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
 
 require('./middleware/auth')

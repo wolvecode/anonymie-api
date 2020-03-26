@@ -19,7 +19,7 @@ const adminSchema = new mongoose.Schema({
   }
 })
 
-adminSchema.pre('save', async function(next) {
+adminSchema.pre('save', async function(next) {  
   const admin = this
   const hash = await bcrypt.hash(this.password, 10)
   this.password = hash

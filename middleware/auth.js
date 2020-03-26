@@ -15,7 +15,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        //save the information provided by the admin
+        //Create a new admin
         const admin = await Admin.create({ email, password })
         return done(null, admin)
       } catch (error) {
