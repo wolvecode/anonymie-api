@@ -11,12 +11,15 @@ passport.use(
   new localStrategy(
     {
       usernameField: 'email',
-      passwordField: 'password'
+      passwordField: 'password',
+      passReqToCallback: true,
+      session: false
     },
-    async (email, password, done) => {
+    async (req, email, password, done) => {
+      const fullName = req.body.fullName
       try {
         //Create a new admin
-        const admin = await Admin.create({ email, password })
+        const admin = await Admin.create({ email, fullName, password })
         return done(null, admin)
       } catch (error) {
         done(error)

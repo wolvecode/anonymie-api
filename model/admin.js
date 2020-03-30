@@ -11,6 +11,10 @@ const adminSchema = new mongoose.Schema({
     minlength: 10,
     maxlength: 255
   },
+  fullName: {
+    type: String,
+    required: true
+  },
   password: {
     type: String,
     required: true,
@@ -19,7 +23,7 @@ const adminSchema = new mongoose.Schema({
   }
 })
 
-adminSchema.pre('save', async function(next) {  
+adminSchema.pre('save', async function(next) {
   const admin = this
   const hash = await bcrypt.hash(this.password, 10)
   this.password = hash
