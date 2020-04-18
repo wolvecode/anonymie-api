@@ -10,6 +10,9 @@ const secureRoute = require('./router/secure-route')
 const getSugComment = require('./router/getSugComment')
 
 const connect = require('./connect')
+//Set view engine
+app.set('view engine', 'pug')
+app.set('views')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
