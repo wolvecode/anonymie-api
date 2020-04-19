@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+let mix = require('laravel-mix')
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +11,8 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/');
+//chnage the mix path my react souce and css/sass path
+mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/')
 
 // Full API
 // mix.js(src, output);
