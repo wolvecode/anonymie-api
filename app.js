@@ -12,7 +12,7 @@ const getSugComment = require('./router/getSugComment')
 const connect = require('./connect')
 //Set view engine
 app.set('view engine', 'pug')
-app.set('views')
+app.set('views', './views')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -31,7 +31,9 @@ require('./middleware/auth')
 app.use('/', login)
 //Access to specific route on authorise
 app.use('/admin', passport.authenticate('jwt', { session: false }), secureRoute)
-
+app.get('/', (req, res) => {
+  res.render('dashboard')
+})
 app.use(
   '/suggestion',
   passport.authenticate('jwt', { session: false }),
