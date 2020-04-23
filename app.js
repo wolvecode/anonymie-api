@@ -4,12 +4,14 @@ const passport = require('passport')
 const app = express()
 const suggestion = require('./router/suggestion')
 const comment = require('./router/comment')
+const getComtBySug = require('./router/getComtBySug')
+
 const admin = require('./router/admin')
 const login = require('./router/login')
 const secureRoute = require('./router/secure-route')
-const getSugComment = require('./router/getSugComment')
+// const getSugComment = require('./router/getSugComment')
 
-const connect = require('./connect')
+require('./connect')
 //Set view engine
 app.set('view engine', 'pug')
 app.set('views', './views')
@@ -39,10 +41,10 @@ app.use(
   passport.authenticate('jwt', { session: false }),
   suggestion
 )
-app.use(
-  '/getSugComt',
-  passport.authenticate('jwt', { session: false }, getSugComment)
-)
+// app.use(
+//   '/getSugComt',
+//   passport.authenticate('jwt', { session: false }, getSugComment)
+// )
 //Handles Error
 app.use(function(err, req, res, next) {
   res.status(err.status || 500)
@@ -50,6 +52,9 @@ app.use(function(err, req, res, next) {
 })
 
 app.use('/comment', comment)
+
+app.use('/comment', getComtBySug)
+
 app.use('/admin', admin)
 
 const port = process.env.PORT || 5000
