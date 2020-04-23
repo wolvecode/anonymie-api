@@ -4,8 +4,11 @@ const router = express.Router()
 const {
   getAllComment,
   createComment,
-  updateComment
+  updateComment,
+  getCommentByID
 } = require('../controllers/commentController')
+
+router.get('/:id', getCommentByID)
 
 router.get('/', getAllComment)
 

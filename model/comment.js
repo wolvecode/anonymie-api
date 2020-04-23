@@ -2,6 +2,14 @@ const Joi = require('joi')
 const mongoose = require('mongoose')
 
 const commentSchema = new mongoose.Schema({
+  SuggestionID: {
+    type: mongoose.SchemaTypes.ObjectId,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
   title: {
     type: String,
     required: true,
@@ -20,6 +28,8 @@ const Comment = mongoose.model('Comment', commentSchema)
 
 function val(suggestion) {
   const schema = {
+    SuggestionID: Joi.any().required(),
+    date: Joi.date(),
     title: Joi.string()
       .min(3)
       .required(),
