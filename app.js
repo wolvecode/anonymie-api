@@ -4,7 +4,7 @@ const passport = require('passport')
 const app = express()
 const suggestion = require('./router/suggestion')
 const comment = require('./router/comment')
-const getComtBySug = require('./router/getComtBySug')
+const getComtBySugId = require('./router/getComtBySug')
 
 const admin = require('./router/admin')
 const login = require('./router/login')
@@ -36,11 +36,13 @@ app.use('/admin', passport.authenticate('jwt', { session: false }), secureRoute)
 app.get('/', (req, res) => {
   res.render('dashboard')
 })
-app.use(
-  '/suggestion',
-  passport.authenticate('jwt', { session: false }),
-  suggestion
-)
+// app.use(
+//   '/suggestion',
+//   passport.authenticate('jwt', { session: false }),
+//   suggestion
+// )
+//TESTING
+app.use('/suggestion', suggestion)
 // app.use(
 //   '/getSugComt',
 //   passport.authenticate('jwt', { session: false }, getSugComment)
@@ -53,7 +55,7 @@ app.use(function(err, req, res, next) {
 
 app.use('/comment', comment)
 
-app.use('/comment', getComtBySug)
+app.use('/comment', getComtBySugId)
 
 app.use('/admin', admin)
 
