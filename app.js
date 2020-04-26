@@ -43,10 +43,7 @@ app.get('/', (req, res) => {
 // )
 //TESTING
 app.use('/suggestion', suggestion)
-// app.use(
-//   '/getSugComt',
-//   passport.authenticate('jwt', { session: false }, getSugComment)
-// )
+
 //Handles Error
 app.use(function(err, req, res, next) {
   res.status(err.status || 500)
@@ -55,7 +52,7 @@ app.use(function(err, req, res, next) {
 
 app.use('/comment', comment)
 
-app.use('/comment', getComtBySugId)
+app.use('/commentbysugid', getComtBySugId)
 
 app.use('/admin', admin)
 

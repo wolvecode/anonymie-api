@@ -24,34 +24,49 @@ exports.createSuggestion = async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  let suggestion = new Suggestion({
-    title: req.body.title,
-    description: req.body.description
-  })
-  suggestion = await suggestion.save()
-  res.send(suggestion)
+  try {
+    let suggestion = new Suggestion({
+      title: req.body.title,
+      description: req.body.description
+    })
+    suggestion = await suggestion.save()
+    res.send(suggestion)
+  } catch (err) {
+    res.send(err.message)
+  }
 }
 
 exports.updateSuggestionById = async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  const suggestion = await Suggestion.findOneAndUpdate(
-    req.params.id,
-    { title: req.body.title, description: req.body.description },
-    { new: true }
-  )
+  try {
+    const suggestion = await Suggestion.findOneAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        description: req.body.description
+      },
+      { new: true }
+    )
 
-  res.send(suggestion)
+    res.send(suggestion)
+  } catch (err) {
+    res.send(err.message)
+  }
 }
 
 exports.deleteSuggestion = async (req, res) => {
-  const suggestion = await Suggestion.findByIdAndRemove(req.params.id)
+  try {
+    const suggestion = await Suggestion.findByIdAndRemove(req.params.id)
 
-  if (!suggestion)
-    return res
-      .status(404)
-      .send('The suggestion with the given ID was not found.')
+    if (!suggestion)
+      return res
+        .status(404)
+        .send('The suggestion with the given ID was not found.')
 
-  res.send(suggestion)
+    res.send(suggestion)
+  } catch (err) {
+    res.send(err.message)
+  }
 }
