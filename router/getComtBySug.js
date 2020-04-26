@@ -1,7 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const { getComtBySugId } = require('../controllers/getComtBySug')
+const {
+  getComtBySugId,
+  createComBySugID
+} = require('../controllers/getComtBySug')
 
-router.get('/suggestion/:id', getComtBySugId)
+router.get('/:id', getComtBySugId)
+
+router.post('/', createComBySugID)
 
 module.exports = router

@@ -2,14 +2,6 @@ const Joi = require('joi')
 const mongoose = require('mongoose')
 
 const suggestionSchema = new mongoose.Schema({
-  CommentID: {
-    type: mongoose.SchemaTypes.ObjectId,
-    required: true
-  },
-  date: {
-    type: Date,
-    default: Date.now
-  },
   title: {
     type: String,
     required: true,
@@ -21,6 +13,10 @@ const suggestionSchema = new mongoose.Schema({
     required: true,
     minlength: 5,
     maxlength: 255
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 })
 
@@ -28,14 +24,13 @@ const Suggestion = mongoose.model('Suggestion', suggestionSchema)
 
 function val(suggestion) {
   const schema = {
-    CommentID: Joi.any().required(),
-    date: Joi.date(),
     title: Joi.string()
       .min(3)
       .required(),
     description: Joi.string()
       .min(3)
-      .required()
+      .required(),
+    date: Joi.date()
   }
 
   return Joi.validate(suggestion, schema)

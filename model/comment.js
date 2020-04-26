@@ -6,21 +6,15 @@ const commentSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     required: true
   },
-  date: {
-    type: Date,
-    default: Date.now
-  },
-  title: {
-    type: String,
-    required: true,
-    minlength: 5,
-    maxlength: 50
-  },
-  description: {
+  comment: {
     type: String,
     required: true,
     minlength: 5,
     maxlength: 255
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 })
 
@@ -30,10 +24,7 @@ function val(suggestion) {
   const schema = {
     SuggestionID: Joi.any().required(),
     date: Joi.date(),
-    title: Joi.string()
-      .min(3)
-      .required(),
-    description: Joi.string()
+    comment: Joi.string()
       .min(3)
       .required()
   }
