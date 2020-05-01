@@ -8,9 +8,12 @@ const commentSchema = new mongoose.Schema({
   },
   comment: {
     type: String,
+    required: true
+  },
+  stared: {
+    type: Boolean,
     required: true,
-    minlength: 5,
-    maxlength: 255
+    default: false
   },
   date: {
     type: Date,
