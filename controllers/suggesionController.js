@@ -41,7 +41,7 @@ exports.updateSuggestionById = async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message)
 
   try {
-    const suggestion = await Suggestion.findOneAndUpdate(
+    const suggestion = await Suggestion.findByIdAndUpdate(
       req.params.id,
       {
         title: req.body.title,
