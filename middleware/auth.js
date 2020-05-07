@@ -1,10 +1,12 @@
 const passport = require('passport')
+const path = require('path')
 const localStrategy = require('passport-local').Strategy
 const { Admin } = require('../model/admin')
-//
 const JWTstrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
 
+// Load configurations stored on .env to node env.
+require('dotenv').config({ path: path.join(__dirname, '.env') })
 //create a passport midddleware to handle admin registration
 passport.use(
   'signup',
@@ -60,7 +62,7 @@ passport.use(
 passport.use(
   new JWTstrategy(
     {
-      secretOrKey: 'top_secret',
+      secretOrKey: process.env.secretOrKey,
       jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
     },
     async (token, done) => {

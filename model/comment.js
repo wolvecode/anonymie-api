@@ -22,8 +22,14 @@ const commentSchema = new mongoose.Schema({
 })
 
 const Comment = mongoose.model('Comment', commentSchema)
+function valComment(comment) {
+  const schema = {
+    stared: Joi.boolean()
+  }
+  return Joi.validate(comment, schema)
+}
 
-function val(suggestion) {
+function val(comment) {
   const schema = {
     SuggestionID: Joi.any().required(),
     date: Joi.date(),
@@ -32,8 +38,9 @@ function val(suggestion) {
       .required()
   }
 
-  return Joi.validate(suggestion, schema)
+  return Joi.validate(comment, schema)
 }
 
 exports.Comment = Comment
 exports.validate = val
+exports.val = valComment
