@@ -1,4 +1,5 @@
 const { Comment, validate } = require('../model/comment')
+const axios = require('axios')
 const mongoose = require('mongoose')
 
 exports.getComtBySugId = async (req, res) => {
@@ -11,14 +12,24 @@ exports.createComBySugID = async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  try {
-    let comment = new Comment({
-      SuggestionID: mongoose.Types.ObjectId(req.body.SuggestionID),
-      comment: req.body.comment
+  let comment = new Comment({
+    SuggestionID: mongoose.Types.ObjectId(req.body.SuggestionID),
+    comment: req.body.comment
+  })
+  comment = await comment.save()
+  res.send(comment)
+}
+
+exports.staredComment = async (req, res) => {
+  const { error } = validate(req.body)
+  if (error) return res.status(400).send(error.details[0].message)
+
+  const comment = await Comment.find({ SuggestionID: req.params.id })
+  if (!comment) {
+    axios.put('localhost:5000/comment/:id').then(res => {
+      console.log(res.data)
     })
-    comment = await comment.save()
-    res.send(comment)
-  } catch (err) {
-    res.send(err.message)
   }
+
+  res.send(comment)
 }

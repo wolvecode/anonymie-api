@@ -7,66 +7,50 @@ exports.getAllSuggestion = async (req, res, next) => {
 }
 
 exports.getSuggestionById = async (req, res, next) => {
-  try {
-    const suggestion = await Suggestion.findById(req.params.id)
-    if (!suggestion)
-      return res
-        .status(404)
-        .send('The suggestion with the given ID was not found.')
-    res.send(suggestion)
-    next()
-  } catch (err) {
-    console.log(err.message)
-  }
+  const suggestion = await Suggestion.findById(req.params.id)
+  if (!suggestion)
+    return res
+      .status(404)
+      .send('The suggestion with the given ID was not found.')
+  res.send(suggestion)
+  next()
 }
 
 exports.createSuggestion = async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  try {
-    let suggestion = new Suggestion({
-      title: req.body.title,
-      description: req.body.description
-    })
-    suggestion = await suggestion.save()
-    res.send(suggestion)
-  } catch (err) {
-    res.send(err.message)
-  }
+  let suggestion = new Suggestion({
+    title: req.body.title,
+    description: req.body.description
+  })
+  suggestion = await suggestion.save()
+  res.send(suggestion)
 }
 
 exports.updateSuggestionById = async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  try {
-    const suggestion = await Suggestion.findByIdAndUpdate(
-      req.params.id,
-      {
-        title: req.body.title,
-        description: req.body.description
-      },
-      { new: true }
-    )
+  const suggestion = await Suggestion.findByIdAndUpdate(
+    req.params.id,
+    {
+      title: req.body.title,
+      description: req.body.description
+    },
+    { new: true }
+  )
 
-    res.send(suggestion)
-  } catch (err) {
-    res.send(err.message)
-  }
+  res.send(suggestion)
 }
 
 exports.deleteSuggestion = async (req, res) => {
-  try {
-    const suggestion = await Suggestion.findByIdAndRemove(req.params.id)
+  const suggestion = await Suggestion.findByIdAndRemove(req.params.id)
 
-    if (!suggestion)
-      return res
-        .status(404)
-        .send('The suggestion with the given ID was not found.')
+  if (!suggestion)
+    return res
+      .status(404)
+      .send('The suggestion with the given ID was not found.')
 
-    res.send(suggestion)
-  } catch (err) {
-    res.send(err.message)
-  }
+  res.send(suggestion)
 }

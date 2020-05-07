@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { Comment, validate } = require('../model/comment')
+const { Comment, validate, val } = require('../model/comment')
 
 exports.getAllComment = async (req, res) => {
   const comment = await Comment.find()
@@ -16,12 +16,9 @@ exports.createComment = async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  if (!suggestion) return res.status(404).send('Invalid suggestion ID')
-
   let comment = new Comment({
     SuggestionID: mongoose.Types.ObjectId(req.body.SuggestionID),
-    title: req.body.title,
-    description: req.body.description
+    comment: req.body.comment
   })
 
   comment = await comment.save()
@@ -35,12 +32,24 @@ exports.updateComment = async (req, res) => {
   let comment = await Comment.findByIdAndUpdate(
     req.params.id,
     {
-      SuggestionID: req.body.SuggestionID,
-      title: req.body.title,
-      description: req.body.description
+      SuggestionID: mongoose.Types.ObjectId(req.body.SuggestionID),
+      comment: req.body.comment
     },
     { new: true }
   )
+  res.send(comment)
+}
 
+exports.staredComment = async (req, res) => {
+  const { error } = val(req.body)
+  if (error) return res.status(400).send(error.details[0].message)
+
+  let comment = await Comment.findByIdAndUpdate(
+    req.params.id,
+    {
+      stared: req.body.stared
+    },
+    { new: true }
+  )
   res.send(comment)
 }
