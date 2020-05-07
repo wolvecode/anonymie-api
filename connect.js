@@ -1,11 +1,17 @@
 const mongoose = require('mongoose')
 
-//connection to the mongo database
-mongoose
-  .connect('mongodb://localhost/anoymie', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  })
-  .then(() => console.log('connected to database'))
-  .catch(err => console.err('inavlid connection'))
+const connect = mongodbURL => {
+  return mongoose
+    .connect(mongodbURL, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      socketTimeoutMS: 0,
+      connectTimeoutMS: 0
+    })
+    .then(() => console.log('connected to database'))
+    .catch(err => console.err('inavlid connection', err))
+}
+
+module.exports = connect
