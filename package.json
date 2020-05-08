@@ -2,7 +2,7 @@
   "name": "anonymie-api",
   "version": "1.0.0",
   "description": "A simple platform where suggestion is been made just to take in some comment/information",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
