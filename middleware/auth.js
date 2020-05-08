@@ -62,7 +62,7 @@ passport.use(
 passport.use(
   new JWTstrategy(
     {
-      secretOrKey: process.env.secretOrKey,
+      secretOrKey: 'anoymie_secret',
       jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
     },
     async (token, done) => {
