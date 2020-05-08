@@ -14,7 +14,7 @@ const secureRoute = require('./router/secure-route')
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 //connect to the database
 const dbConnect = require('./connect')
-dbConnect(process.env.mongoURI)
+dbConnect(process.env.MONGODB_URI || process.env.mongoURI)
 
 app.use(cors())
 
@@ -34,7 +34,7 @@ app.use('/', login)
 
 //TESTING
 app.get('/', (req, res) => {
-  res.send('hello world')
+  res.send('Hello world')
 })
 app.use('/suggestion', suggestion)
 
@@ -49,7 +49,7 @@ app.use(function(err, req, res, next) {
   res.json({ error: err })
 })
 
-const port = process.env.PORT || 5000
-app.listen(port, () => {
-  console.log(`Listening on port: ${port}`)
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+  console.log(`Listening on port: ${PORT}`)
 })
