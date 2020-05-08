@@ -33,6 +33,9 @@ app.use('/', login)
 // )
 
 //TESTING
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
 app.use('/suggestion', suggestion)
 
 app.use('/comment', comment)
