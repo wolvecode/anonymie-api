@@ -10,6 +10,6 @@ router.get('/:id', getComtBySugId)
 
 router.post('/', createComBySugID)
 
-router.put('/', staredComment)
+// router.put('/', staredComment)
 
 module.exports = router

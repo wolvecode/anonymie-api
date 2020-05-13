@@ -24,7 +24,7 @@ passport.use(
         const admin = await Admin.create({ email, fullName, password })
         return done(null, admin)
       } catch (error) {
-        done(error)
+        done(error.message)
       }
     }
   )

@@ -20,8 +20,8 @@ router.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, admin, info) => {
     try {
       if (err || !admin) {
-        const error = new Error('An Error occurred')
-        return next(error)
+        const error = new Error('Invalid email or password')
+        return next(error.message)
       }
       req.login(admin, { session: false }, async error => {
         if (error) return next(error)
