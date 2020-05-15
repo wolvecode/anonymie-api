@@ -14,7 +14,7 @@ const secureRoute = require('./router/secure-route')
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 //connect to the database
 const dbConnect = require('./connect')
-dbConnect(process.env.MONGODB_URI || process.env.mongoURI)
+dbConnect(/*process.env.MONGODB_URI || */ process.env.DATABASE)
 
 app.use(cors())
 
