@@ -7,7 +7,9 @@ exports.getAllSuggestion = async (req, res, next) => {
 }
 
 exports.getSuggestionById = async (req, res, next) => {
-  const suggestion = await Suggestion.findById(req.params.id)
+  const suggestion = await Suggestion.findById(req.params.id).find({
+    $text: { $search: '' }
+  })
   if (!suggestion)
     return res
       .status(404)
