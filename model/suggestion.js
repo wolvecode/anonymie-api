@@ -20,6 +20,19 @@ const suggestionSchema = new mongoose.Schema({
   }
 })
 
+suggestionSchema.index(
+  {
+    title: 'text',
+    description: 'text'
+  },
+  {
+    weights: {
+      name: 5,
+      description: 1
+    }
+  }
+)
+
 const Suggestion = mongoose.model('Suggestion', suggestionSchema)
 
 function val(suggestion) {
