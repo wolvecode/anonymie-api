@@ -10,7 +10,7 @@ const {
   deleteSuggestion
 } = require('../controllers/suggesionController')
 
-router.get('/', getAllSuggestion)
+router.post('/', getAllSuggestion)
 
 router.get('/:id', getSuggestionById)
 
