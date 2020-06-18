@@ -1,15 +1,26 @@
 const { Suggestion, validate } = require('../model/suggestion')
 
-exports.getAllSuggestion = async (req, res, next) => {
-  const suggestion = await Suggestion.find()
-  res.send(suggestion)
-  next()
+exports.getAllSuggestion = (req, res) => {
+  let term = req.body.searchTerm
+
+  if (term) {
+    console.log(term)
+    Suggestion.find()
+      .find({ $text: { $search: term } })
+      .exec((err, suggestion) => {
+        if (err) return res.status(400).json({ success: false, err })
+        return res.status(200).json({ suggestion })
+      })
+  } else {
+    Suggestion.find().exec((err, suggestion) => {
+      if (err) return res.status(400).json({ success: false, err })
+      return res.status(200).json({ suggestion })
+    })
+  }
 }
 
 exports.getSuggestionById = async (req, res, next) => {
-  const suggestion = await Suggestion.findById(req.params.id).find({
-    $text: { $search: '' }
-  })
+  const suggestion = await Suggestion.findById(req.params.id)
   if (!suggestion)
     return res
       .status(404)
