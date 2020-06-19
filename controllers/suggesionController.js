@@ -14,7 +14,9 @@ exports.getAllSuggestion = (req, res) => {
   } else {
     Suggestion.find().exec((err, suggestion) => {
       if (err) return res.status(400).json({ success: false, err })
-      return res.status(200).json({ suggestion })
+      return res
+        .status(200)
+        .json({ suggestion, sugggestionSize: suggestion.length })
     })
   }
 }
