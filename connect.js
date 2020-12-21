@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const connect = mongodbURL => {
+const connect = async mongodbURL => {
   return mongoose
-    .connect(mongodbURL, {
+    .connect(process.env.mongoURI, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
@@ -11,7 +11,7 @@ const connect = mongodbURL => {
       connectTimeoutMS: 0
     })
     .then(() => console.log('connected to database'))
-    .catch(err => console.err('inavlid connection', err))
+    .catch(error => console.error('inavlid connection', error))
 }
 
 module.exports = connect
